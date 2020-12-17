@@ -5,24 +5,28 @@ const  input  = document.getElementById('input'),
        test   = document.getElementById('test')
 let    progress = document.getElementById('prog')
 
-//worker
+//worker 
+let w
 
-const w = new Worker('worker_prime.js')
-
-w.addEventListener('message' ,r=> {
-	if (r.data.prog){
-		progress.style = r.data.prog
-	}else if(r.data.end){
-		progress.style = ''
-	}else{
-		output.value = r.data
-	}
-})
+function listen_toworker(){
+	w.addEventListener('message' ,r=> {
+		if (r.data.prog){
+			progress.style = r.data.prog
+		}else if(r.data.end){
+			progress.style = ''
+		}else{
+			output.value = r.data
+		}
+	})
+}
 
 //get input value 
 
 test.addEventListener('click' ,  ()=>{
-	w.terminate()
+	//worker
+	if (w) w.terminate()
+	w = new Worker('worker_prime.js')
+	listen_toworker()
 	w.postMessage(input.value)
 })
 
