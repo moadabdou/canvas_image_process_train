@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!-- saved from url=(0123)https://ensweb.users.info.unicaen.fr/cours/idc-pwa/10/?fbclid=IwAR2wNn32lhBARWswqW4WfiyeDJ4Zfm5x2Vf83L9T1zny-3njI63nxOidkuE -->
+<html lang="en" class="translated-ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Web workers - Canvas</title>
+<link rel="icon" type="image/png" href="https://ensweb.users.info.unicaen.fr/ui/images/favicon.png"> 
+<link rel="stylesheet" href="./Web workers - Canvas_files/normalize.css">
+<link rel="stylesheet" type="text/css" href="./Web workers - Canvas_files/fiche_alex.css">
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="./Web workers - Canvas_files/translateelement.css"></head>
+<body>
+<div id="wrapper">
+
+<header id="tetiere">
+	<div class="logo">
+	<a href="https://ensweb.users.info.unicaen.fr/" title="Web Technologies - University of Caen" class="logo"><span class="accessibilite">Logo de l'université de Caen</span></a>
+	</div>
+	<div class="titreCours">
+			<h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Web workers - Canvas</font></font></h1>
+						<p class="diplome"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Internet, Data and Knowledge Master</font></font></p>
+			<p class="enseignants"><a href="https://niveau.users.greyc.fr/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Alexandre Level</font></font></a></p>
+	</div>
+	<section class="contexte">
+	<h2><a href="https://ensweb.users.info.unicaen.fr/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Teaching Web Technologies</font></font></a></h2>
+		<ul>
+			<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Module: </font></font><a href="https://ensweb.users.info.unicaen.fr/cours/idc-pwa/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Programming Web Applications</font></font></a></li>
+<li><a href="https://www.info.unicaen.fr/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Internet, Data and Knowledge Master</font></font></a></li>		<li><a href="http://www.unicaen.fr/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">University of Caen</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> , year 2020-2021</font></font></li>
+		</ul>
+	</section><!-- fin de contexte -->
+		<div class="clearer">&nbsp;</div>
+</header><!-- fin de tetiere -->
+
+<main id="majeur">
+
+
+
+<!--  ##########  introduction  ########  -->
+
+<section class="bloc">
+<h2><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Web workers - Canvas</font></font></h2>
+<h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Course notes</font></font></h3>
+<ul>
+<li><a class="titrePres" href="https://ensweb.users.info.unicaen.fr/pres/web-workers/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Web workers</font></font></a>
+<ul>
+</ul></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial"><font style="vertical-align: inherit;"></font><code>canvas</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">MDN </font><font style="vertical-align: inherit;">Tutorial</font></font></a></li></ul>
+</section><!-- fin de l'introduction -->
+<section class="bloc">
+<h2><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Personal work</font></font></h2><section>
+<h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Goals</font></font></h3>
+
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">The first exercise is a direct application of web workers to see their interest in practice. </font><font style="vertical-align: inherit;">In the second, we use the canvas to manipulate images, and we mix that up with web workers and the File API.
+</font></font><!-- Le dernier exercice est une manipulation basique du canevas pour dessiner. -->
+</p>
+
+</section>
+	<section class="exercice" id="exo-01">
+		<h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Exercise 1 - Prime numbers	</font></font><a href="https://ensweb.users.info.unicaen.fr/cours/idc-pwa/10/?fbclid=IwAR2wNn32lhBARWswqW4WfiyeDJ4Zfm5x2Vf83L9T1zny-3njI63nxOidkuE#exo-01" class="exo-link" title="Link to this exercise"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">#</font></font></a>
+</h3>
+		<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">We use a simple pretext to manipulate web workers a bit: an app that calculates the </font></font><var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">n-</font></font></var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> th prime number. </font><font style="vertical-align: inherit;">For example the first prime number is 2, the second is 3, the third is 5, etc.</font></font></p>
+<ol>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Create a page with two forms, which will be used to test with or without workers. </font><font style="vertical-align: inherit;">Each form must contain an input (for a number), an output and a button.</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Write a function </font></font><code>is_prime(z)</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">that tests whether the </font><font style="vertical-align: inherit;">given </font><font style="vertical-align: inherit;">integer </font></font><var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">z</font></font></var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> is prime. </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Do not aim for efficiency! </font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">The goal here is to test functions that take a long time to run anyway ...
+</font></font><div style="font-size: smaller"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+We can copy the following code to go faster:
+</font></font><pre class="src surprise"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">function is_prime (nb) { </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+	for (let i = 2; i &lt;= Math.sqrt (nb); i ++) { </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+		if (nb% i == 0) { </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+			return false; </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+		} </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+	} </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+	return true; </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+}</font></font>
+</pre>
+</div>
+</li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Write a function </font></font><code>nth_prime(n)</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">that returns the </font></font><var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">nth</font></font></var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> prime number (as explained above). </font><font style="vertical-align: inherit;">We will obviously use the previous function, and we will not try to do something clever!
+</font></font><div style="font-size: smaller"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+We can copy the following code to go faster:
+</font></font><pre class="src surprise"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">function nth_prime (n) { </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+	let current = 1 </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+	for (let i = 0; i &lt;n; i ++) { </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+		do { </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+			current ++; </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+		} while (! is_prime (current)); </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+	} </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+	return current; </font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+}</font></font>
+</pre>
+</div>
+</li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Have the first form calculate the </font></font><var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">n-</font></font></var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> th prime number in its output, with </font></font><var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">n</font></font></var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> the integer given as input by the Internet user.
+</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Give an input large enough for the calculation to take time; </font><font style="vertical-align: inherit;">depending on the machine and your implementation, with an </font></font><var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">n</font></font></var><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> of around 100,000 it should already be quite good (increase gradually so that the calculation takes at least a few seconds). </font><font style="vertical-align: inherit;">Note that the page UI is not usable at all.</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Use a web worker to have the second form do the same calculation, but in a different thread (and potentially, depending on the machine, in a different core). </font><font style="vertical-align: inherit;">Note that the page UI remains mostly usable.
+</font></font><div class="info"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Be careful, browsers can cache the script executed by workers, and not update it when the page is refreshed, which is very annoying during development. </font><font style="vertical-align: inherit;">If you have the problem, a simple solution is to add a bogus parameter to the URL of the script that changes with each call, in order to force the download despite the cache. </font><font style="vertical-align: inherit;">We can use for example </font></font><code>"worker.js?v=" + new Date().getTime()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. </font><font style="vertical-align: inherit;">(Obviously this setting would be removed on a production site.)</font></font></div>
+</li>
+<li><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Optional:</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> add a </font></font><i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">progressbar</font></font></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> indicating the progress of the calculation.</font></font></li>
+</ol>
+	</section>
+
+<!-- ********************************************************************** -->
+
+	<section class="exercice" id="exo-02">
+		<h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Exercise 2 - Image editor	</font></font><a href="https://ensweb.users.info.unicaen.fr/cours/idc-pwa/10/?fbclid=IwAR2wNn32lhBARWswqW4WfiyeDJ4Zfm5x2Vf83L9T1zny-3njI63nxOidkuE#exo-02" class="exo-link" title="Link to this exercise"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">#</font></font></a>
+</h3>
+		<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">We are going to create an image processing application start.</font></font></p>
+<h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">The basics: manipulating image pixels</font></font></h4>
+<ol>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Create a page with an image and a canvas.</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Draw the image on the canvas. </font><font style="vertical-align: inherit;">The page should now have two identical images.</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Invert the colors of the image in the canvas.</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Instead of inverting the colors directly at the start of the page, add a button that allows you to do it on demand.</font></font></li>
+</ol>
+<h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Delegation of work to a thread</font></font></h4>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Normally, image processing is not instantaneous: try with a relatively large image (a few megabytes). </font><font style="vertical-align: inherit;">It is therefore relevant to delegate this work to a worker.</font></font></p>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Set up a worker that retrieves the data from the image, works on it, and returns the result. </font><font style="vertical-align: inherit;">You will have to use the object transfer, to avoid copying the data between the script and the worker.</font></font></p>
+<h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editing an image provided by the Internet user</font></font></h4>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">We are now going to make our page more interactive.</font></font></p>
+<ol>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Remove the image, and set up a file upload field, which will allow the Internet user to manipulate his own images.</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">When the Internet user selects a file, if it is an image, it must be drawn in the canvas. </font><font style="vertical-align: inherit;">NB: the easiest way is to create one </font></font><code>img</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">in JS and to proceed as before (except that the element will </font></font><code>img</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+not appear on the page).</font></font></li>
+</ol>
+<h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Optional: editor improvement</font></font></h4>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Add three R, G, B sliders, with values ​​from 0 to 255, and use them to create a threshold or clipping effect: the value of the R channel of each pixel is only kept if it is greater than the threshold , otherwise it is set to 0 (or to 255, or to the threshold, as desired).</font></font></p>
+
+	</section>
+
+<!-- ********************************************************************** -->
+
+</section><!-- fin de travail -->
+</main><!-- fin de majeur -->
+
+<aside id="colonne"><div id="colonne-img"></div></aside><!-- fin de colonne -->
+</div> <!-- fermeture du wrapper --><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./Web workers - Canvas_files/translate_24dp.png" width="20" height="20" alt="Google Translate"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">Original text</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">Contribute a better translation</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div>
+
+
+<div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div></body></html>
