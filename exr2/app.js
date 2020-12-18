@@ -2,20 +2,27 @@
 
 const cn = document.querySelector('canvas'),
     ctx = cn.getContext('2d'), 
+    input =  document.getElementById('file'),
     W = cn.width , 
     H = cn.height,
     inv = document.getElementById('inv'), 
     reset = document.getElementById('reset') 
 
 let rgb = [0,0,0]
+
 rgb[0] = document.getElementById('r'),
 rgb[1] = document.getElementById('g'),
 rgb[2] = document.getElementById('b')
 
-
-const Img = new Image()
-Img.src = "img.jpg"
-Img.addEventListener('load' , drawImg)
+// SET image
+let  Img 
+const url = window.URL || window.webkitURL
+input.addEventListener("change" , ()=> {
+    Img = new Image()
+    Img.src = url.createObjectURL(input.files[0])
+    Img.addEventListener('load' , drawImg)
+})
+reset.addEventListener('click' ,drawImg)
 
 let data ;
 function drawImg(){
@@ -23,47 +30,36 @@ function drawImg(){
     data = ctx.getImageData(0 ,0 , W , H)
 }
 
-
-function createPx(x , y, clrs){
-    ctx.fillStyle = `rgba(${clrs[0]} , ${clrs[1]} , ${clrs[2]})`
-    ctx.fillRect(x , y , 1 ,1)
-}
-
-
-function setEffects(clrs){
-    let r = [] 
-    for(let i = 0 ; i < 3 ;i++ ){
-        if (clrs[i] >= rgb[i].value ){
-            r.push(clrs[i] - rgb[i].value)
-        }else {
-            r.push(clrs[i])
-        }
+function createPx(pxs){
+    for (let i = 0; i < pxs.length ; i ++){
+        let px = pxs[i]
+        ctx.fillStyle = `rgba(${px.clrs[0]} , ${px.clrs[1]} , ${px.clrs[2]})`
+        ctx.fillRect(px.x , px.y , 1 ,1)
     }
-    return r
+    spin.style = 'display : none'
 }
 
-function invert(reg){
-    for(let y = 0 ; y <= data.width ; y ++){
-        for(let x = 0 ; x <= data.height ; x ++){
-            let dem = (y * 4 * data.width) + (x * 4)
-            let R = data.data[dem] ,
-                G = data.data[dem + 1], 
-                B = data.data[dem + 2] , 
-                clrs
-            if (reg == true){
-                clrs = setEffects([R,G,B])
-            }else {
-                R = 255 - R, 
-                G = 255 - G,
-                B = 255 - B    
-            }
-            createPx(x,y, clrs || [R,G,B])
-        }
+let w ,
+    spin = document.querySelector('.cov span')
+function effect(rf){
+    spin.style = 'display : inline'
+    if (w) {w.terminate() ; drawImg()}
+    w = new Worker('worker_img.js')
+    w.postMessage({
+        rf,
+        data : {
+            data:data.data ,
+            width : data.width ,
+            height : data.height
+        },
+        rgb : rgb.map(c=> c.value)
+    })
+    w.onmessage = r=> {
+        createPx(r.data)
     }
 }
 
-inv.addEventListener('click' , invert)
-reset.addEventListener('click' ,drawImg)
+inv.addEventListener('click' , ()=>effect())
 rgb.forEach(c=>{
-    c.addEventListener("input" , ()=> invert(true) )
+    c.addEventListener("input" , ()=> effect(true) )
 })
